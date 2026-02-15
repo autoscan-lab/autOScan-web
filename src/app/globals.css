@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root {
+  --font-apple-like: var(--font-manrope);
+}
+
+@theme inline {
+  --font-sans: var(--font-apple-like);
+}
