@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "autOScan | Web In Development",
-  description: "autOScan web is currently in development.",
+  title: "autOScan — C Submission Grader",
+  description:
+    "Batch compile, grade, and analyze C lab submissions from the terminal. Banned function detection, similarity analysis, and AI pattern detection.",
 };
 
 export default function RootLayout({
@@ -18,9 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
-      <body className={`${manrope.variable} min-h-full font-sans antialiased`}>
-        {children}
+    <html
+      lang="en"
+      className={`${outfit.variable} ${jetbrainsMono.variable} h-full`}
+    >
+      <body className="min-h-full font-sans antialiased">
+        <SessionProvider>{children}</SessionProvider>
       </body>
     </html>
   );

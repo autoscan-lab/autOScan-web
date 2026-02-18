@@ -1,9 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --font-apple-like: var(--font-manrope);
+  --color-bg: #050510;
+  --color-bg-alt: #0a0a1a;
+  --color-surface: #0c0c18;
+  --color-surface-hover: #111125;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-accent: #22d3ee;
+  --color-accent-dim: #06b6d4;
+  --color-accent-purple: #8b5cf6;
+  --color-text: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-faint: #64748b;
+
+  --font-body: var(--font-outfit);
+  --font-code: var(--font-jetbrains);
 }
 
 @theme inline {
-  --font-sans: var(--font-apple-like);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-code);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.25);
+  color: white;
 }
