@@ -1,38 +1,49 @@
 "use client";
 
+import {
+  DESKTOP_HIGH_QUALITY_MEDIA_QUERY,
+  REDUCED_DATA_MEDIA_QUERY,
+} from "@/lib/video-sources";
+
 const FEATURE_ROWS = [
   {
     title: "Policy configuration built for real courses",
     details:
       "Configure the required file or files to be compiled, compiler flags, linker flags, libraries, and any external files each submission depends on. Define test cases for every assignment so each submission is validated against the exact requirements.",
-    videoSrc: "/videos/feature-policy.mp4",
+    videoLowSrc: "/videos/feature-policy.mp4",
+    videoHighSrc: "/videos/feature-policy-hq.mp4",
   },
   {
     title: "Mass compilation and grading at scale",
     details:
       "Run mass compile and grade workflows across the full class in one pass. autOScan applies the configured policy to every submission and returns consistent results for fast review.",
-    videoSrc: "/videos/feature-batch.mp4",
+    videoLowSrc: "/videos/feature-batch.mp4",
+    videoHighSrc: "/videos/feature-batch-hq.mp4",
   },
   {
     title: "Code similarity review with side by side evidence",
     details:
       "Compare suspicious submissions with a focused side by side view that highlights overlap. Prioritize high risk pairs and inspect evidence without switching tools.",
-    videoSrc: "/videos/feature-similarity.mp4",
+    videoLowSrc: "/videos/feature-similarity.mp4",
+    videoHighSrc: "/videos/feature-similarity-hq.mp4",
   },
   {
     title: "Multi process execution for concurrent lab workflows",
     details:
       "Run and validate submissions that require multiple processes running at the same time. autOScan supports concurrent lab scenarios such as semaphores, sockets, and message queues so behavior can be checked in realistic execution conditions.",
-    videoSrc: "/videos/feature-multiprocess.mp4",
+    videoLowSrc: "/videos/feature-multiprocess.mp4",
+    videoHighSrc: "/videos/feature-multiprocess-hq.mp4",
   },
 ];
 
 function FeatureMedia({
   title,
-  videoSrc,
+  videoLowSrc,
+  videoHighSrc,
 }: {
   title: string;
-  videoSrc: string;
+  videoLowSrc: string;
+  videoHighSrc: string;
 }) {
   return (
     <div className="bg-muted/45 relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
@@ -46,7 +57,17 @@ function FeatureMedia({
         poster="/screenshots/autoscan.png"
         aria-label={`${title} video preview`}
       >
-        <source src={videoSrc} type="video/mp4" />
+        <source
+          src={videoLowSrc}
+          media={REDUCED_DATA_MEDIA_QUERY}
+          type="video/mp4"
+        />
+        <source
+          src={videoHighSrc}
+          media={DESKTOP_HIGH_QUALITY_MEDIA_QUERY}
+          type="video/mp4"
+        />
+        <source src={videoLowSrc} type="video/mp4" />
       </video>
       <span className="absolute top-3 right-3 z-30 rounded-full bg-black/70 px-2 py-1 text-xs text-white">
         Quick peek
@@ -105,7 +126,8 @@ export function Features() {
                 >
                   <FeatureMedia
                     title={feature.title}
-                    videoSrc={feature.videoSrc}
+                    videoLowSrc={feature.videoLowSrc}
+                    videoHighSrc={feature.videoHighSrc}
                   />
                 </div>
               </article>

@@ -9,6 +9,10 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import DecryptedText from "@/components/DecryptedText";
 import Iridescence from "@/components/Iridescence";
+import {
+  DESKTOP_HIGH_QUALITY_MEDIA_QUERY,
+  REDUCED_DATA_MEDIA_QUERY,
+} from "@/lib/video-sources";
 
 const GLASS_BUTTON_CLASS =
   "rounded-full bg-zinc-100 px-4 text-zinc-900 transition hover:bg-zinc-200";
@@ -168,6 +172,16 @@ export function Hero() {
               onError={() => setHeroVideoUnavailable(true)}
               aria-label="autOScan hero preview video"
             >
+              <source
+                src="/videos/hero-preview.mp4"
+                media={REDUCED_DATA_MEDIA_QUERY}
+                type="video/mp4"
+              />
+              <source
+                src="/videos/hero-preview-hq.mp4"
+                media={DESKTOP_HIGH_QUALITY_MEDIA_QUERY}
+                type="video/mp4"
+              />
               <source src="/videos/hero-preview.mp4" type="video/mp4" />
             </video>
           ) : (
