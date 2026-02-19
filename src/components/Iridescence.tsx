@@ -1,5 +1,5 @@
 import { Renderer, Program, Mesh, Color, Triangle } from 'ogl';
-import { useEffect, useRef, type ComponentPropsWithoutRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const vertexShader = `
 attribute vec2 uv;
@@ -44,13 +44,11 @@ void main() {
 }
 `;
 
-interface IridescenceProps
-  extends Omit<ComponentPropsWithoutRef<'div'>, 'color' | 'onReady'> {
+interface IridescenceProps {
   color?: [number, number, number];
   speed?: number;
   amplitude?: number;
   mouseReact?: boolean;
-  onReady?: () => void;
 }
 
 export default function Iridescence({
@@ -58,7 +56,6 @@ export default function Iridescence({
   speed = 1.0,
   amplitude = 0.1,
   mouseReact = true,
-  onReady,
   ...rest
 }: IridescenceProps) {
   const ctnDom = useRef<HTMLDivElement>(null);
@@ -105,16 +102,11 @@ export default function Iridescence({
 
     const mesh = new Mesh(gl, { geometry, program });
     let animateId: number;
-    let notifiedReady = false;
 
     function update(t: number) {
       animateId = requestAnimationFrame(update);
       program.uniforms.uTime.value = t * 0.001;
       renderer.render({ scene: mesh });
-      if (!notifiedReady) {
-        notifiedReady = true;
-        onReady?.();
-      }
     }
     animateId = requestAnimationFrame(update);
     ctn.appendChild(gl.canvas);
@@ -137,12 +129,10 @@ export default function Iridescence({
       if (mouseReact) {
         ctn.removeEventListener('mousemove', handleMouseMove);
       }
-      if (ctn.contains(gl.canvas)) {
-        ctn.removeChild(gl.canvas);
-      }
+      ctn.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [color, speed, amplitude, mouseReact, onReady]);
+  }, [color, speed, amplitude, mouseReact]);
 
   return <div ref={ctnDom} className="w-full h-full" {...rest} />;
 }
