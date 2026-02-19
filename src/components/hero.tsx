@@ -2,15 +2,16 @@
 
 import * as React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Sparkle, DownloadSimple, PlayCircle } from "@phosphor-icons/react";
+import { Sparkle, DownloadSimpleIcon, PlayCircleIcon } from "@phosphor-icons/react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import DecryptedText from "@/components/DecryptedText";
+import Iridescence from "@/components/Iridescence";
 
 const GLASS_BUTTON_CLASS =
-  "rounded-full bg-zinc-100/95 px-4 text-black transition hover:bg-zinc-200/95";
+  "rounded-full bg-zinc-100 px-4 text-zinc-900 transition hover:bg-zinc-200";
 
 function Nav() {
   const { data: session, status } = useSession();
@@ -80,26 +81,26 @@ export function Hero() {
   const [heroVideoUnavailable, setHeroVideoUnavailable] = React.useState(false);
 
   return (
-    <header className="relative overflow-hidden text-white">
+    <header className="relative overflow-hidden bg-[#0d0f14] text-white">
       <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 h-full w-full">
+          <Iridescence
+            color={[0.24, 0.44, 0.9]}
+            speed={0.1}
+            amplitude={0.08}
+            mouseReact={false}
+          />
+        </div>
         <div
-          className="absolute inset-0 bg-[url('/backgrounds/online-noise-gradient-02.jpg')] bg-cover bg-center opacity-65"
+          className="absolute inset-0 bg-[radial-gradient(110%_80%_at_50%_4%,rgba(120,170,255,0.14),transparent_62%)]"
           style={{
             WebkitMaskImage:
-              "linear-gradient(to bottom, black 0%, black 72%, transparent 100%)",
+              "linear-gradient(to bottom, black 0%, black 88%, transparent 100%)",
             maskImage:
-              "linear-gradient(to bottom, black 0%, black 72%, transparent 100%)",
+              "linear-gradient(to bottom, black 0%, black 88%, transparent 100%)",
           }}
         />
-        <div
-          className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/4 to-transparent"
-          style={{
-            WebkitMaskImage:
-              "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)",
-            maskImage:
-              "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)",
-          }}
-        />
+        <div className="absolute inset-x-0 bottom-0 h-[38rem] bg-gradient-to-b from-transparent via-transparent to-background md:h-[50rem]" />
       </div>
 
       <Nav />
@@ -108,12 +109,12 @@ export function Hero() {
         <div className="mb-16 text-center">
           <Badge
             variant="secondary"
-            className="mb-6 gap-1.5 bg-white/88 px-3 py-1.5 text-zinc-800"
+            className="mb-6 gap-1.5 border border-white/20 bg-white/14 px-3 py-1.5 text-white"
           >
             <Sparkle size={14} weight="fill" />
             OS Lab Submission Grader
           </Badge>
-          <h1 className="mx-auto mb-6 max-w-4xl scroll-m-20 text-center text-4xl !leading-tight font-bold tracking-tight [text-wrap:_balance] md:text-5xl lg:text-6xl">
+          <h1 className="mx-auto mb-6 max-w-4xl scroll-m-20 text-center text-4xl !leading-tight font-medium tracking-tight text-white [text-wrap:_balance] md:text-5xl lg:text-6xl">
             Batch compile, grade, and analyze C submissions with{" "}
             <DecryptedText
               text="autOScan"
@@ -121,19 +122,22 @@ export function Hero() {
               sequential
               revealDirection="start"
               speed={90}
-              className="text-black drop-shadow-[0_0_12px_rgba(0,0,0,0.22)]"
-              encryptedClassName="text-black/45"
+              className="text-white font-medium"
+              encryptedClassName="text-white/65"
               parentClassName="inline-block"
             />
           </h1>
-          <p className="mx-auto mb-10 max-w-2xl text-center text-base leading-relaxed text-white/90 md:text-lg lg:text-xl">
+          <p className="mx-auto mb-10 max-w-2xl text-center text-base leading-relaxed text-white md:text-lg lg:text-xl">
             Detect banned functions, find similarities, and flag AI patterns. A
             TUI application for grading at scale.
           </p>
           <div className="flex items-center justify-center gap-3">
             <a href="#download">
-              <Button size="lg" className="gap-2 bg-black text-white hover:bg-black/85">
-                <DownloadSimple size={18} weight="bold" />
+              <Button
+                size="lg"
+                className="gap-2 bg-black text-white hover:bg-zinc-900"
+              >
+                <DownloadSimpleIcon size={18} weight="bold" />
                 Download v3.1.0
               </Button>
             </a>
@@ -164,7 +168,7 @@ export function Hero() {
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black/15">
                 <div className="rounded-full bg-black/45 p-3">
-                  <PlayCircle size={38} weight="fill" className="text-white" />
+                  <PlayCircleIcon size={38} weight="fill" className="text-white" />
                 </div>
               </div>
             </div>

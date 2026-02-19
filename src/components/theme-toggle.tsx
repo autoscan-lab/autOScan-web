@@ -17,7 +17,7 @@ export function ThemeToggle() {
       <Button
         size="sm"
         variant="ghost"
-        className="h-9 w-9 rounded-full bg-zinc-100/95 px-0 text-black"
+        className="h-9 w-9 rounded-full bg-zinc-100 px-0 text-zinc-900"
       />
     );
   }
@@ -26,7 +26,7 @@ export function ThemeToggle() {
     <Button
       size="sm"
       variant="ghost"
-      className="h-9 w-9 rounded-full bg-zinc-100/95 px-0 text-black hover:bg-zinc-200/95"
+      className="h-9 w-9 rounded-full bg-zinc-100 px-0 text-zinc-900 hover:bg-zinc-200"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       {resolvedTheme === "dark" ? (

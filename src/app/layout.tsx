@@ -17,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "autOScan — C Submission Grader",
+  title: "autOScan",
   description:
     "Batch compile, grade, and analyze C lab submissions from the terminal. Banned function detection, similarity analysis, and AI pattern detection.",
 };

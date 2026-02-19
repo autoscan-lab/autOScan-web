@@ -53,7 +53,7 @@ function FeatureMedia({
 
   if (videoUnavailable) {
     return (
-      <div className="bg-muted/45 relative min-h-[260px] overflow-hidden rounded-2xl md:min-h-[360px]">
+      <div className="bg-muted/45 relative min-h-[320px] overflow-hidden rounded-2xl md:min-h-[440px] lg:min-h-[520px]">
         <img src={image} alt={imageAlt} className="h-full w-full object-cover" />
         <div className="absolute inset-0 flex items-center justify-center bg-black/35">
           <div className="rounded-full bg-black/45 p-3">
@@ -68,7 +68,7 @@ function FeatureMedia({
   }
 
   return (
-    <div className="bg-muted/45 relative min-h-[260px] overflow-hidden rounded-2xl md:min-h-[360px]">
+    <div className="bg-muted/45 relative min-h-[320px] overflow-hidden rounded-2xl md:min-h-[440px] lg:min-h-[520px]">
       <video
         className="h-full w-full object-cover"
         autoPlay
@@ -91,9 +91,12 @@ function FeatureMedia({
 
 export function Features() {
   return (
-    <section id="features" className="py-24 md:py-32">
+    <section
+      id="features"
+      className="-mt-16 pt-16 pb-24 md:-mt-24 md:pt-24 md:pb-32"
+    >
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="text-center text-4xl font-bold tracking-tight md:text-5xl">
+        <h2 className="text-foreground text-center text-4xl font-medium tracking-tight md:text-5xl">
           Feature highlights
         </h2>
         <p className="text-muted-foreground mx-auto mt-4 max-w-3xl text-center text-lg leading-relaxed md:text-xl">
@@ -106,14 +109,20 @@ export function Features() {
             return (
               <article
                 key={feature.title}
-                className="grid items-center gap-8 py-2 md:py-4 lg:grid-cols-2 lg:gap-16"
+                className={`grid items-center gap-8 py-2 md:py-4 lg:gap-16 ${
+                  reverse
+                    ? "lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.95fr)]"
+                    : "lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.25fr)]"
+                }`}
               >
                 <div
                   className={
-                    reverse ? "order-2 lg:order-2" : "order-2 lg:order-1"
+                    reverse
+                      ? "order-2 min-w-0 lg:order-2"
+                      : "order-2 min-w-0 lg:order-1"
                   }
                 >
-                  <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">
+                  <h3 className="text-foreground text-3xl font-medium tracking-tight md:text-4xl">
                     {feature.title}
                   </h3>
                   <p className="text-muted-foreground mt-4 text-lg leading-relaxed md:text-xl">
@@ -123,7 +132,9 @@ export function Features() {
 
                 <div
                   className={
-                    reverse ? "order-1 lg:order-1" : "order-1 lg:order-2"
+                    reverse
+                      ? "order-1 min-w-0 lg:order-1"
+                      : "order-1 min-w-0 lg:order-2"
                   }
                 >
                   <FeatureMedia
