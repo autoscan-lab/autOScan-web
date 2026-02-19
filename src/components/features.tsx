@@ -1,74 +1,41 @@
 "use client";
 
-import { useState } from "react";
-import { PlayCircle } from "@phosphor-icons/react";
-
 const FEATURE_ROWS = [
   {
-    title: "Batch grading in minutes",
+    title: "Policy configuration built for real courses",
     details:
-      "Run compile and grade jobs across large submission sets with one command. Each run produces consistent output for fast review.",
-    image: "/screenshots/autoscan.png",
-    imageAlt: "Batch grading view in autOScan",
-    videoSrc: "/videos/feature-batch.mp4",
-  },
-  {
-    title: "Policy checks with clear reports",
-    details:
-      "Define required headers, forbidden functions, and compile flags in YAML. autOScan checks each file and reports every rule result.",
-    image: "/screenshots/autoscan.png",
-    imageAlt: "Policy report preview in autOScan",
+      "Configure the required file or files to be compiled, compiler flags, linker flags, libraries, and any external files each submission depends on. Define test cases for every assignment so each submission is validated against the exact requirements.",
     videoSrc: "/videos/feature-policy.mp4",
   },
   {
-    title: "Similarity review for suspicious pairs",
+    title: "Mass compilation and grading at scale",
     details:
-      "Compare submissions side by side and inspect overlap in one place so you can focus on the highest risk cases first.",
-    image: "/screenshots/autoscan.png",
-    imageAlt: "Similarity review screen in autOScan",
+      "Run mass compile and grade workflows across the full class in one pass. autOScan applies the configured policy to every submission and returns consistent results for fast review.",
+    videoSrc: "/videos/feature-batch.mp4",
+  },
+  {
+    title: "Code similarity review with side by side evidence",
+    details:
+      "Compare suspicious submissions with a focused side by side view that highlights overlap. Prioritize high risk pairs and inspect evidence without switching tools.",
     videoSrc: "/videos/feature-similarity.mp4",
   },
   {
-    title: "AI signal checks you can inspect",
+    title: "Multi process execution for concurrent lab workflows",
     details:
-      "Use entropy and style signals to flag unusual files, then inspect evidence directly in the same workflow.",
-    image: "/screenshots/autoscan.png",
-    imageAlt: "AI signal analysis view in autOScan",
-    videoSrc: "/videos/feature-ai.mp4",
+      "Run and validate submissions that require multiple processes running at the same time. autOScan supports concurrent lab scenarios such as semaphores, sockets, and message queues so behavior can be checked in realistic execution conditions.",
+    videoSrc: "/videos/feature-multiprocess.mp4",
   },
 ];
 
 function FeatureMedia({
   title,
-  image,
-  imageAlt,
   videoSrc,
 }: {
   title: string;
-  image: string;
-  imageAlt: string;
   videoSrc: string;
 }) {
-  const [videoUnavailable, setVideoUnavailable] = useState(false);
-
-  if (videoUnavailable) {
-    return (
-      <div className="bg-muted/45 relative min-h-[320px] overflow-hidden rounded-2xl md:min-h-[440px] lg:min-h-[520px]">
-        <img src={image} alt={imageAlt} className="h-full w-full object-cover" />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/35">
-          <div className="rounded-full bg-black/45 p-3">
-            <PlayCircle size={34} weight="fill" className="text-white" />
-          </div>
-        </div>
-        <span className="absolute top-3 right-3 rounded-full bg-black/70 px-2 py-1 text-xs text-white">
-          Video soon
-        </span>
-      </div>
-    );
-  }
-
   return (
-    <div className="bg-muted/45 relative min-h-[320px] overflow-hidden rounded-2xl md:min-h-[440px] lg:min-h-[520px]">
+    <div className="bg-muted/45 relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
       <video
         className="h-full w-full object-cover"
         autoPlay
@@ -76,8 +43,6 @@ function FeatureMedia({
         muted
         playsInline
         preload="metadata"
-        poster={image}
-        onError={() => setVideoUnavailable(true)}
         aria-label={`${title} video preview`}
       >
         <source src={videoSrc} type="video/mp4" />
@@ -97,10 +62,10 @@ export function Features() {
     >
       <div className="mx-auto max-w-7xl px-6">
         <h2 className="text-foreground text-center text-4xl font-medium tracking-tight md:text-5xl">
-          Feature highlights
+          Core capabilities
         </h2>
-        <p className="text-muted-foreground mx-auto mt-4 max-w-3xl text-center text-lg leading-relaxed md:text-xl">
-          Each feature includes a side preview slot ready for tutorial videos.
+        <p className="text-foreground mx-auto mt-4 max-w-3xl text-center text-lg leading-relaxed md:text-xl">
+          A focused workflow for policy control, batch grading, similarity review, and multi process execution.
         </p>
 
         <div className="mt-16 space-y-14">
@@ -125,7 +90,7 @@ export function Features() {
                   <h3 className="text-foreground text-3xl font-medium tracking-tight md:text-4xl">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground mt-4 text-lg leading-relaxed md:text-xl">
+                  <p className="text-foreground mt-4 text-lg leading-relaxed md:text-xl">
                     {feature.details}
                   </p>
                 </div>
@@ -139,8 +104,6 @@ export function Features() {
                 >
                   <FeatureMedia
                     title={feature.title}
-                    image={feature.image}
-                    imageAlt={feature.imageAlt}
                     videoSrc={feature.videoSrc}
                   />
                 </div>
