@@ -49,6 +49,7 @@ interface IridescenceProps {
   speed?: number;
   amplitude?: number;
   mouseReact?: boolean;
+  onReady?: () => void;
 }
 
 export default function Iridescence({
@@ -56,7 +57,7 @@ export default function Iridescence({
   speed = 1.0,
   amplitude = 0.1,
   mouseReact = true,
-  ...rest
+  onReady,
 }: IridescenceProps) {
   const ctnDom = useRef<HTMLDivElement>(null);
   const mousePos = useRef({ x: 0.5, y: 0.5 });
@@ -102,12 +103,20 @@ export default function Iridescence({
 
     const mesh = new Mesh(gl, { geometry, program });
     let animateId: number;
+    let didNotifyReady = false;
 
     function update(t: number) {
       animateId = requestAnimationFrame(update);
       program.uniforms.uTime.value = t * 0.001;
       renderer.render({ scene: mesh });
+      if (!didNotifyReady) {
+        didNotifyReady = true;
+        gl.canvas.style.opacity = '1';
+        onReady?.();
+      }
     }
+    gl.canvas.style.opacity = '0';
+    gl.canvas.style.transition = 'opacity 360ms ease';
     animateId = requestAnimationFrame(update);
     ctn.appendChild(gl.canvas);
 
@@ -129,10 +138,12 @@ export default function Iridescence({
       if (mouseReact) {
         ctn.removeEventListener('mousemove', handleMouseMove);
       }
-      ctn.removeChild(gl.canvas);
+      if (ctn.contains(gl.canvas)) {
+        ctn.removeChild(gl.canvas);
+      }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [color, speed, amplitude, mouseReact]);
+  }, [color, speed, amplitude, mouseReact, onReady]);
 
-  return <div ref={ctnDom} className="w-full h-full" {...rest} />;
+  return <div ref={ctnDom} className="h-full w-full" />;
 }

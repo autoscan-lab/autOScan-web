@@ -49,7 +49,7 @@ function Nav() {
                 <Button
                   size="sm"
                   className={GLASS_BUTTON_CLASS}
-                  onClick={() => signOut()}
+                  onClick={() => signOut({ redirect: false })}
                 >
                   Sign Out
                 </Button>
@@ -79,16 +79,27 @@ function Nav() {
 
 export function Hero() {
   const [heroVideoUnavailable, setHeroVideoUnavailable] = React.useState(false);
+  const [iridescenceReady, setIridescenceReady] = React.useState(false);
+  const handleIridescenceReady = React.useCallback(
+    () => setIridescenceReady(true),
+    []
+  );
 
   return (
     <header className="relative overflow-hidden bg-[#0d0f14] text-white">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 h-full w-full">
+        <div className="absolute inset-0 bg-[radial-gradient(120%_92%_at_50%_-8%,#76a8ff_0%,#4e79db_42%,#325ecb_78%,#2a55c0_100%)]" />
+        <div
+          className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
+            iridescenceReady ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <Iridescence
             color={[0.24, 0.44, 0.9]}
             speed={0.1}
             amplitude={0.08}
             mouseReact={false}
+            onReady={handleIridescenceReady}
           />
         </div>
         <div
