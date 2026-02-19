@@ -1,80 +1,176 @@
 "use client";
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { TerminalFrame } from "./terminal-frame";
+import * as React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { Sparkle, DownloadSimple, PlayCircle } from "@phosphor-icons/react";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import DecryptedText from "@/components/DecryptedText";
+
+const GLASS_BUTTON_CLASS =
+  "rounded-full bg-zinc-100/95 px-4 text-black transition hover:bg-zinc-200/95";
+
+function Nav() {
+  const { data: session, status } = useSession();
+
+  return (
+    <nav className="fixed top-0 right-0 left-0 z-50">
+      <div className="w-full px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          <a href="/" className="font-mono text-lg font-bold tracking-tight text-white">
+            autOScan
+          </a>
+
+          <div className="flex items-center gap-2">
+            <div className="rounded-full">
+              <ThemeToggle />
+            </div>
+
+            {status === "loading" ? (
+              <div className="h-8 w-24 animate-pulse rounded-xl bg-white/20" />
+            ) : session?.user ? (
+              <>
+                <img
+                  src={session.user.image ?? "/logos/profile.svg"}
+                  alt="Profile image"
+                  onError={(event) => {
+                    event.currentTarget.src = "/logos/profile.svg";
+                  }}
+                  className="h-8 w-8 rounded-full border border-white/45 object-cover"
+                />
+                <a href="#download">
+                  <Button size="sm" className={GLASS_BUTTON_CLASS}>
+                    Download
+                  </Button>
+                </a>
+                <Button
+                  size="sm"
+                  className={GLASS_BUTTON_CLASS}
+                  onClick={() => signOut()}
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  size="sm"
+                  className={GLASS_BUTTON_CLASS}
+                  onClick={() => signIn("google")}
+                >
+                  Sign In
+                </Button>
+                <a href="#download">
+                  <Button size="sm" className={GLASS_BUTTON_CLASS}>
+                    Download
+                  </Button>
+                </a>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
 
 export function Hero() {
+  const [heroVideoUnavailable, setHeroVideoUnavailable] = React.useState(false);
+
   return (
-    <section className="relative overflow-hidden pb-20 pt-12 sm:pb-32 sm:pt-20">
-      {/* Background glows */}
+    <header className="relative overflow-hidden text-white">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-[10%] top-[20%] h-[500px] w-[600px] rounded-full bg-cyan-500/[0.07] blur-[120px]" />
-        <div className="absolute right-[5%] top-[10%] h-[400px] w-[500px] rounded-full bg-purple-500/[0.05] blur-[120px]" />
+        <div
+          className="absolute inset-0 bg-[url('/backgrounds/online-noise-gradient-02.jpg')] bg-cover bg-center opacity-65"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 0%, black 72%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 72%, transparent 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/4 to-transparent"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 78%, transparent 100%)",
+          }}
+        />
       </div>
 
-      <div className="relative mx-auto max-w-6xl px-6 sm:px-10">
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease }}
-        >
-          <p className="mb-4 font-mono text-sm tracking-widest text-cyan-400 uppercase">
+      <Nav />
+      <div className="h-16" />
+      <div className="relative mx-auto max-w-6xl px-6 py-14 md:py-20 lg:py-28">
+        <div className="mb-16 text-center">
+          <Badge
+            variant="secondary"
+            className="mb-6 gap-1.5 bg-white/88 px-3 py-1.5 text-zinc-800"
+          >
+            <Sparkle size={14} weight="fill" />
             OS Lab Submission Grader
-          </p>
-          <h1 className="text-5xl font-semibold tracking-[-0.03em] text-white sm:text-7xl lg:text-8xl">
-            autOScan
+          </Badge>
+          <h1 className="mx-auto mb-6 max-w-4xl scroll-m-20 text-center text-4xl !leading-tight font-bold tracking-tight [text-wrap:_balance] md:text-5xl lg:text-6xl">
+            Batch compile, grade, and analyze C submissions with{" "}
+            <DecryptedText
+              text="autOScan"
+              animateOn="view"
+              sequential
+              revealDirection="start"
+              speed={90}
+              className="text-black drop-shadow-[0_0_12px_rgba(0,0,0,0.22)]"
+              encryptedClassName="text-black/45"
+              parentClassName="inline-block"
+            />
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400 sm:text-xl">
-            Batch compile, grade, and analyze C lab submissions from the
-            terminal. Detect banned functions, find similarities, and flag AI
-            patterns — all in one tool.
+          <p className="mx-auto mb-10 max-w-2xl text-center text-base leading-relaxed text-white/90 md:text-lg lg:text-xl">
+            Detect banned functions, find similarities, and flag AI patterns. A
+            TUI application for grading at scale.
           </p>
-
-          <div className="mt-10 flex justify-center gap-4">
-            <a
-              href="#download"
-              className="inline-flex items-center gap-2 rounded-full bg-cyan-500 px-8 py-3 text-sm font-medium text-black transition-all duration-200 hover:bg-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20"
-            >
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                />
-              </svg>
-              Download v3.1.0
+          <div className="flex items-center justify-center gap-3">
+            <a href="#download">
+              <Button size="lg" className="gap-2 bg-black text-white hover:bg-black/85">
+                <DownloadSimple size={18} weight="bold" />
+                Download v3.1.0
+              </Button>
             </a>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="mx-auto mt-16 max-w-4xl"
-          initial={{ opacity: 0, y: 48 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease }}
-        >
-          <TerminalFrame>
-            <Image
-              src="/screenshots/autoscan.png"
-              alt="autOScan TUI showing the main menu with batch compilation, policy management, and settings"
-              width={1024}
-              height={640}
-              priority
-              className="w-full"
-            />
-          </TerminalFrame>
-        </motion.div>
+        <div className="bg-white/10 relative w-full overflow-hidden rounded-2xl border border-white/18 backdrop-blur-sm">
+          {!heroVideoUnavailable ? (
+            <video
+              className="h-auto w-full object-contain"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              poster="/screenshots/autoscan.png"
+              onError={() => setHeroVideoUnavailable(true)}
+              aria-label="autOScan hero preview video"
+            >
+              <source src="/videos/hero-preview.mp4" type="video/mp4" />
+            </video>
+          ) : (
+            <div className="relative">
+              <img
+                src="/screenshots/autoscan.png"
+                alt="autOScan TUI showing the main menu with batch compilation, policy management, and settings"
+                className="h-auto w-full object-contain"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/15">
+                <div className="rounded-full bg-black/45 p-3">
+                  <PlayCircle size={38} weight="fill" className="text-white" />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </section>
+    </header>
   );
 }

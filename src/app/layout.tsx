@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, JetBrains_Mono } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -30,9 +31,17 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${outfit.variable} ${jetbrainsMono.variable} h-full`}
+      suppressHydrationWarning
     >
       <body className="min-h-full font-sans antialiased">
-        <SessionProvider>{children}</SessionProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionProvider>{children}</SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

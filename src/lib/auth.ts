@@ -19,13 +19,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
-      if (!user.email) return false;
-      const allowed = getAllowedEmails();
-      if (allowed.size === 0) return true;
-      return allowed.has(user.email.toLowerCase());
-    },
-    async session({ session }) {
+    async session({ session, token }) {
+      if (session.user && typeof token.picture === "string") {
+        session.user.image = token.picture;
+      }
       return session;
     },
   },

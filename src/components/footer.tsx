@@ -1,35 +1,47 @@
+"use client";
+
+import { signIn, useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+
+const YEAR = new Date().getFullYear();
+
 const LINKS = [
-  { label: "Features", href: "#features" },
-  { label: "How it Works", href: "#how-it-works" },
-  { label: "Download", href: "#download" },
-] as const;
+  { title: "Features", href: "#features" },
+  { title: "Download", href: "#download" },
+];
 
 export function Footer() {
+  const { data: session } = useSession();
+
   return (
-    <footer className="border-t border-white/[0.06] py-12">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 sm:flex-row sm:justify-between sm:px-10">
-        <div className="flex flex-col items-center gap-2 sm:items-start">
-          <span className="text-sm font-semibold tracking-[-0.02em] text-white">
-            autOScan
-          </span>
-          <span className="text-xs text-slate-500">MIT License</span>
+    <footer className="pt-16 pb-8">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="border-surface flex flex-row flex-wrap items-center !justify-center gap-x-10 gap-y-3 border-t pt-8 text-center md:!justify-between">
+          <p className="text-foreground">
+            Copyright &copy; {YEAR}{" "}
+            <span className="font-mono font-semibold">autOScan</span>
+          </p>
+          <ul className="flex flex-wrap items-center justify-center gap-6">
+            {LINKS.map(({ title, href }, key) => (
+              <li key={key}>
+                <a
+                  href={href}
+                  className="text-foreground hover:text-primary text-sm transition-colors"
+                >
+                  {title}
+                </a>
+              </li>
+            ))}
+            {!session?.user && (
+              <Button
+                className="w-full bg-foreground text-background hover:bg-foreground/85 sm:max-w-fit"
+                onClick={() => signIn("google")}
+              >
+                Sign in
+              </Button>
+            )}
+          </ul>
         </div>
-
-        <nav className="flex items-center gap-6">
-          {LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-slate-500 transition-colors duration-200 hover:text-slate-300"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        <p className="text-xs text-slate-600">
-          Built by Felipe Trejos
-        </p>
       </div>
     </footer>
   );
