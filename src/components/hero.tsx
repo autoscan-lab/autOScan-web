@@ -2,13 +2,14 @@
 
 import * as React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Sparkle, DownloadSimpleIcon, PlayCircleIcon } from "@phosphor-icons/react";
+import { Sparkle, DownloadSimpleIcon } from "@phosphor-icons/react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import DecryptedText from "@/components/DecryptedText";
 import Iridescence from "@/components/Iridescence";
+import { AutoplayVideo } from "@/components/autoplay-video";
 
 const GLASS_BUTTON_CLASS =
   "rounded-full bg-zinc-100 px-4 text-zinc-900 transition hover:bg-zinc-200";
@@ -78,43 +79,11 @@ function Nav() {
 }
 
 export function Hero() {
-  const [heroVideoUnavailable, setHeroVideoUnavailable] = React.useState(false);
-  const [heroAutoplayBlocked, setHeroAutoplayBlocked] = React.useState(false);
   const [iridescenceReady, setIridescenceReady] = React.useState(false);
-  const heroVideoRef = React.useRef<HTMLVideoElement | null>(null);
   const handleIridescenceReady = React.useCallback(
     () => setIridescenceReady(true),
     []
   );
-
-  const ensureHeroPlayback = React.useCallback(() => {
-    const videoElement = heroVideoRef.current;
-    if (!videoElement || heroVideoUnavailable) {
-      return;
-    }
-
-    const playPromise = videoElement.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => setHeroAutoplayBlocked(false))
-        .catch(() => setHeroAutoplayBlocked(true));
-    }
-  }, [heroVideoUnavailable]);
-
-  React.useEffect(() => {
-    const videoElement = heroVideoRef.current;
-    if (!videoElement || heroVideoUnavailable) {
-      return;
-    }
-
-    videoElement.muted = true;
-    videoElement.defaultMuted = true;
-    videoElement.playsInline = true;
-    videoElement.setAttribute("playsinline", "");
-    videoElement.setAttribute("webkit-playsinline", "true");
-
-    ensureHeroPlayback();
-  }, [heroVideoUnavailable, ensureHeroPlayback]);
 
   return (
     <header className="relative overflow-hidden bg-[#0d0f14] text-white">
@@ -187,40 +156,15 @@ export function Hero() {
         </div>
 
         <div className="bg-white/10 relative w-full overflow-hidden rounded-2xl border border-white/18 backdrop-blur-sm">
-          {!heroVideoUnavailable ? (
-            <video
-              ref={heroVideoRef}
-              className="h-auto w-full object-contain"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              poster="/screenshots/autoscan.png"
-              onCanPlay={ensureHeroPlayback}
-              onLoadedData={ensureHeroPlayback}
-              onPlay={() => setHeroAutoplayBlocked(false)}
-              onError={() => setHeroVideoUnavailable(true)}
-              controls={heroAutoplayBlocked}
-              disablePictureInPicture
-              aria-label="autOScan hero preview video"
-            >
-              <source src="/videos/hero-preview.mp4" type="video/mp4" />
-            </video>
-          ) : (
-            <div className="relative">
-              <img
-                src="/screenshots/autoscan.png"
-                alt="autOScan TUI showing the main menu with batch compilation, policy management, and settings"
-                className="h-auto w-full object-contain"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/15">
-                <div className="rounded-full bg-black/45 p-3">
-                  <PlayCircleIcon size={38} weight="fill" className="text-white" />
-                </div>
-              </div>
-            </div>
-          )}
+          <AutoplayVideo
+            src="/videos/hero-preview.mp4"
+            poster="/screenshots/autoscan.png"
+            ariaLabel="autOScan hero preview video"
+            fallbackAlt="autOScan TUI showing the main menu with batch compilation, policy management, and settings"
+            className="h-auto w-full object-contain"
+            fallbackClassName="h-auto w-full object-contain"
+            preload="auto"
+          />
         </div>
       </div>
     </header>

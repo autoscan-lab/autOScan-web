@@ -1,7 +1,6 @@
 "use client";
 
-import * as React from "react";
-import { PlayCircleIcon } from "@phosphor-icons/react";
+import { AutoplayVideo } from "@/components/autoplay-video";
 
 const FEATURE_ROWS = [
   {
@@ -37,129 +36,19 @@ function FeatureMedia({
   title: string;
   videoSrc: string;
 }) {
-  const videoRef = React.useRef<HTMLVideoElement | null>(null);
-  const [videoUnavailable, setVideoUnavailable] = React.useState(false);
-  const [autoplayBlocked, setAutoplayBlocked] = React.useState(false);
-  const [shouldLoad, setShouldLoad] = React.useState(false);
-  const [isVisible, setIsVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement || videoUnavailable) {
-      return;
-    }
-
-    videoElement.muted = true;
-    videoElement.defaultMuted = true;
-    videoElement.playsInline = true;
-    videoElement.setAttribute("playsinline", "");
-    videoElement.setAttribute("webkit-playsinline", "true");
-  }, [videoUnavailable]);
-
-  React.useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement || videoUnavailable) {
-      return;
-    }
-
-    if (typeof IntersectionObserver === "undefined") {
-      setShouldLoad(true);
-      setIsVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShouldLoad(true);
-        }
-
-        setIsVisible(entry.isIntersecting && entry.intersectionRatio >= 0.35);
-      },
-      {
-        threshold: [0, 0.35, 0.75],
-        rootMargin: "120px 0px",
-      }
-    );
-
-    observer.observe(videoElement);
-
-    return () => observer.disconnect();
-  }, [videoUnavailable]);
-
-  React.useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement || !shouldLoad || videoUnavailable) {
-      return;
-    }
-
-    videoElement.load();
-  }, [shouldLoad, videoUnavailable]);
-
-  const ensurePlayback = React.useCallback(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement || !shouldLoad || videoUnavailable) {
-      return;
-    }
-
-    if (!isVisible) {
-      if (!videoElement.paused) {
-        videoElement.pause();
-      }
-      return;
-    }
-
-    const playPromise = videoElement.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => setAutoplayBlocked(false))
-        .catch(() => setAutoplayBlocked(true));
-    }
-  }, [isVisible, shouldLoad, videoUnavailable]);
-
-  React.useEffect(() => {
-    ensurePlayback();
-  }, [ensurePlayback]);
-
-  if (videoUnavailable) {
-    return (
-      <div className="bg-muted/45 relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
-        <img
-          src="/screenshots/autoscan.png"
-          alt={`${title} screenshot`}
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 flex items-center justify-center bg-black/15">
-          <div className="rounded-full bg-black/45 p-3">
-            <PlayCircleIcon size={34} weight="fill" className="text-white" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-muted/45 relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
-      <video
-        ref={videoRef}
-        className="h-full w-full object-cover"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload={shouldLoad ? "metadata" : "none"}
+      <AutoplayVideo
+        src={videoSrc}
         poster="/screenshots/autoscan.png"
-        aria-label={`${title} video preview`}
-        onCanPlay={ensurePlayback}
-        onLoadedData={ensurePlayback}
-        onPlay={() => setAutoplayBlocked(false)}
-        onError={() => setVideoUnavailable(true)}
-        controls={autoplayBlocked}
-        disablePictureInPicture
-      >
-        {shouldLoad ? <source src={videoSrc} type="video/mp4" /> : null}
-      </video>
-      <span className="absolute top-3 right-3 rounded-full bg-black/70 px-2 py-1 text-xs text-white">
+        ariaLabel={`${title} video preview`}
+        fallbackAlt={`${title} screenshot`}
+        className="h-full w-full object-cover"
+        fallbackClassName="h-full w-full object-cover"
+        preload="metadata"
+        loadWhenVisible
+      />
+      <span className="absolute top-3 right-3 z-30 rounded-full bg-black/70 px-2 py-1 text-xs text-white">
         Quick peek
       </span>
     </div>
