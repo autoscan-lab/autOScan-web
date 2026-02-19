@@ -79,11 +79,42 @@ function Nav() {
 
 export function Hero() {
   const [heroVideoUnavailable, setHeroVideoUnavailable] = React.useState(false);
+  const [heroAutoplayBlocked, setHeroAutoplayBlocked] = React.useState(false);
   const [iridescenceReady, setIridescenceReady] = React.useState(false);
+  const heroVideoRef = React.useRef<HTMLVideoElement | null>(null);
   const handleIridescenceReady = React.useCallback(
     () => setIridescenceReady(true),
     []
   );
+
+  const ensureHeroPlayback = React.useCallback(() => {
+    const videoElement = heroVideoRef.current;
+    if (!videoElement || heroVideoUnavailable) {
+      return;
+    }
+
+    const playPromise = videoElement.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setHeroAutoplayBlocked(false))
+        .catch(() => setHeroAutoplayBlocked(true));
+    }
+  }, [heroVideoUnavailable]);
+
+  React.useEffect(() => {
+    const videoElement = heroVideoRef.current;
+    if (!videoElement || heroVideoUnavailable) {
+      return;
+    }
+
+    videoElement.muted = true;
+    videoElement.defaultMuted = true;
+    videoElement.playsInline = true;
+    videoElement.setAttribute("playsinline", "");
+    videoElement.setAttribute("webkit-playsinline", "true");
+
+    ensureHeroPlayback();
+  }, [heroVideoUnavailable, ensureHeroPlayback]);
 
   return (
     <header className="relative overflow-hidden bg-[#0d0f14] text-white">
@@ -158,14 +189,20 @@ export function Hero() {
         <div className="bg-white/10 relative w-full overflow-hidden rounded-2xl border border-white/18 backdrop-blur-sm">
           {!heroVideoUnavailable ? (
             <video
+              ref={heroVideoRef}
               className="h-auto w-full object-contain"
               autoPlay
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="auto"
               poster="/screenshots/autoscan.png"
+              onCanPlay={ensureHeroPlayback}
+              onLoadedData={ensureHeroPlayback}
+              onPlay={() => setHeroAutoplayBlocked(false)}
               onError={() => setHeroVideoUnavailable(true)}
+              controls={heroAutoplayBlocked}
+              disablePictureInPicture
               aria-label="autOScan hero preview video"
             >
               <source src="/videos/hero-preview.mp4" type="video/mp4" />
