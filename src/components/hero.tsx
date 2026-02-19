@@ -79,16 +79,27 @@ function Nav() {
 
 export function Hero() {
   const [heroVideoUnavailable, setHeroVideoUnavailable] = React.useState(false);
+  const [iridescenceReady, setIridescenceReady] = React.useState(false);
+  const handleIridescenceReady = React.useCallback(
+    () => setIridescenceReady(true),
+    []
+  );
 
   return (
     <header className="relative overflow-hidden bg-[#0d0f14] text-white">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 h-full w-full">
+        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_-8%,#76a8ff_0%,#4f78d9_40%,#355cc7_72%,#274eb5_100%)]" />
+        <div
+          className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
+            iridescenceReady ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <Iridescence
             color={[0.24, 0.44, 0.9]}
             speed={0.1}
             amplitude={0.08}
             mouseReact={false}
+            onReady={handleIridescenceReady}
           />
         </div>
         <div
@@ -100,7 +111,7 @@ export function Hero() {
               "linear-gradient(to bottom, black 0%, black 88%, transparent 100%)",
           }}
         />
-        <div className="absolute inset-x-0 bottom-0 h-[38rem] bg-gradient-to-b from-transparent via-transparent to-background md:h-[50rem]" />
+        <div className="absolute inset-x-0 bottom-0 h-[34rem] bg-gradient-to-b from-transparent via-[#7fa8ff14] to-[#e9f2ff80] md:h-[46rem]" />
       </div>
 
       <Nav />
