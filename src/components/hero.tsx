@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Sparkle, DownloadSimpleIcon, PlayCircleIcon } from "@phosphor-icons/react";
+import { Sparkle, DownloadSimpleIcon } from "@phosphor-icons/react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -163,7 +163,7 @@ export function Hero() {
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="auto"
               poster="/screenshots/autoscan.png"
               onError={() => setHeroVideoUnavailable(true)}
               aria-label="autOScan hero preview video"
@@ -171,18 +171,11 @@ export function Hero() {
               <source src="/videos/hero-preview.mp4" type="video/mp4" />
             </video>
           ) : (
-            <div className="relative">
-              <img
-                src="/screenshots/autoscan.png"
-                alt="autOScan TUI showing the main menu with batch compilation, policy management, and settings"
-                className="h-auto w-full object-contain"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/15">
-                <div className="rounded-full bg-black/45 p-3">
-                  <PlayCircleIcon size={38} weight="fill" className="text-white" />
-                </div>
-              </div>
-            </div>
+            <img
+              src="/screenshots/autoscan.png"
+              alt="autOScan TUI showing the main menu with batch compilation, policy management, and settings"
+              className="h-auto w-full object-contain"
+            />
           )}
         </div>
       </div>
