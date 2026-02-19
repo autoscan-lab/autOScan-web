@@ -1,7 +1,5 @@
 "use client";
 
-import { AutoplayVideo } from "@/components/autoplay-video";
-
 const FEATURE_ROWS = [
   {
     title: "Policy configuration built for real courses",
@@ -38,16 +36,18 @@ function FeatureMedia({
 }) {
   return (
     <div className="bg-muted/45 relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
-      <AutoplayVideo
-        src={videoSrc}
-        poster="/screenshots/autoscan.png"
-        ariaLabel={`${title} video preview`}
-        fallbackAlt={`${title} screenshot`}
+      <video
         className="h-full w-full object-cover"
-        fallbackClassName="h-full w-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
         preload="metadata"
-        loadWhenVisible
-      />
+        poster="/screenshots/autoscan.png"
+        aria-label={`${title} video preview`}
+      >
+        <source src={videoSrc} type="video/mp4" />
+      </video>
       <span className="absolute top-3 right-3 z-30 rounded-full bg-black/70 px-2 py-1 text-xs text-white">
         Quick peek
       </span>

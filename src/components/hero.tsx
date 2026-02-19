@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import DecryptedText from "@/components/DecryptedText";
 import Iridescence from "@/components/Iridescence";
-import { AutoplayVideo } from "@/components/autoplay-video";
 
 const GLASS_BUTTON_CLASS =
   "rounded-full bg-zinc-100 px-4 text-zinc-900 transition hover:bg-zinc-200";
@@ -79,6 +78,7 @@ function Nav() {
 }
 
 export function Hero() {
+  const [heroVideoUnavailable, setHeroVideoUnavailable] = React.useState(false);
   const [iridescenceReady, setIridescenceReady] = React.useState(false);
   const handleIridescenceReady = React.useCallback(
     () => setIridescenceReady(true),
@@ -156,15 +156,27 @@ export function Hero() {
         </div>
 
         <div className="bg-white/10 relative w-full overflow-hidden rounded-2xl border border-white/18 backdrop-blur-sm">
-          <AutoplayVideo
-            src="/videos/hero-preview.mp4"
-            poster="/screenshots/autoscan.png"
-            ariaLabel="autOScan hero preview video"
-            fallbackAlt="autOScan TUI showing the main menu with batch compilation, policy management, and settings"
-            className="h-auto w-full object-contain"
-            fallbackClassName="h-auto w-full object-contain"
-            preload="auto"
-          />
+          {!heroVideoUnavailable ? (
+            <video
+              className="h-auto w-full object-contain"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              poster="/screenshots/autoscan.png"
+              onError={() => setHeroVideoUnavailable(true)}
+              aria-label="autOScan hero preview video"
+            >
+              <source src="/videos/hero-preview.mp4" type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src="/screenshots/autoscan.png"
+              alt="autOScan TUI showing the main menu with batch compilation, policy management, and settings"
+              className="h-auto w-full object-contain"
+            />
+          )}
         </div>
       </div>
     </header>
