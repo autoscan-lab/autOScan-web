@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "@phosphor-icons/react";
+import { MoonIcon, SunIcon } from "@phosphor-icons/react";
 
 import { Button } from "@/components/ui/button";
 
@@ -30,9 +30,9 @@ export function ThemeToggle() {
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       {resolvedTheme === "dark" ? (
-        <Sun size={18} weight="bold" />
+        <SunIcon size={18} weight="bold" />
       ) : (
-        <Moon size={18} weight="bold" />
+        <MoonIcon size={18} weight="bold" />
       )}
       <span className="sr-only">Toggle theme</span>
     </Button>

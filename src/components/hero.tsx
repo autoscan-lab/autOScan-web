@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Sparkle, DownloadSimpleIcon } from "@phosphor-icons/react";
+import { SparkleIcon, DownloadSimpleIcon } from "@phosphor-icons/react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -126,7 +126,7 @@ export function Hero() {
             variant="secondary"
             className="mb-6 gap-1.5 border border-white/20 bg-white/14 px-3 py-1.5 text-white"
           >
-            <Sparkle size={14} weight="fill" />
+            <SparkleIcon size={14} weight="fill" />
             OS Lab Submission Grader
           </Badge>
           <h1 className="mx-auto mb-6 max-w-4xl scroll-m-20 text-center text-4xl !leading-tight font-medium tracking-tight text-white [text-wrap:_balance] md:text-5xl lg:text-6xl">

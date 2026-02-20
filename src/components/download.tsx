@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { ArrowRight, DownloadSimple, WarningCircle } from "@phosphor-icons/react";
+import { ArrowRightIcon, DownloadSimpleIcon, WarningCircleIcon } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -74,7 +74,7 @@ export function Download() {
                 onClick={() => signIn("google")}
                 className="mt-4 gap-2 bg-foreground text-background hover:bg-foreground/85"
               >
-                <DownloadSimple size={18} weight="bold" />
+                <DownloadSimpleIcon size={18} weight="bold" />
                 Sign in to continue
               </Button>
             )}
@@ -84,7 +84,7 @@ export function Download() {
         {showUnauthorized && (
           <div className="mb-8 rounded-xl border border-amber-500/40 bg-amber-500/10 p-5">
             <div className="flex items-start gap-3">
-              <WarningCircle
+              <WarningCircleIcon
                 size={20}
                 weight="fill"
                 className="mt-0.5 shrink-0 text-amber-400"
@@ -138,55 +138,57 @@ function DownloadCards({
   dimmed: boolean;
 }) {
   return (
-    <div className={dimmed ? "opacity-55" : ""}>
-      <div className="mb-4 flex items-center gap-3">
-        <span className="text-2xl font-semibold">3.1.0</span>
-        <Badge variant="secondary">Latest</Badge>
-      </div>
+    <div>
+      <div className={dimmed ? "opacity-55" : ""}>
+        <div className="mb-4 flex items-center gap-3">
+          <span className="text-2xl font-semibold">3.1.0</span>
+          <Badge variant="secondary">Latest</Badge>
+        </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:max-w-2xl">
-        {PLATFORMS.map((platform) => (
-          <div key={platform.label} className="bg-card overflow-hidden rounded-xl border">
-            <div className="bg-muted/40 flex items-center gap-2.5 border-b px-5 py-3">
-              <img
-                src={platform.logoPath}
-                alt={`${platform.label} logo`}
-                className={platform.logoClassName}
-              />
-              <span className="font-semibold">{platform.label}</span>
+        <div className="grid gap-4 sm:grid-cols-2 lg:max-w-2xl">
+          {PLATFORMS.map((platform) => (
+            <div key={platform.label} className="bg-card overflow-hidden rounded-xl border">
+              <div className="bg-muted/40 flex items-center gap-2.5 border-b px-5 py-3">
+                <img
+                  src={platform.logoPath}
+                  alt={`${platform.label} logo`}
+                  className={platform.logoClassName}
+                />
+                <span className="font-semibold">{platform.label}</span>
+              </div>
+              <div className="divide-y">
+                {platform.variants.map((variant) =>
+                  interactive ? (
+                    <button
+                      key={variant.key}
+                      onClick={() => onDownload(variant.key)}
+                      className="hover:bg-muted/50 flex w-full items-center justify-between px-5 py-3.5 text-sm transition-colors"
+                    >
+                      <span>{variant.label}</span>
+                      <DownloadSimpleIcon
+                        size={16}
+                        weight="bold"
+                        className="text-muted-foreground"
+                      />
+                    </button>
+                  ) : (
+                    <div
+                      key={variant.key}
+                      className="flex w-full items-center justify-between px-5 py-3.5 text-sm"
+                    >
+                      <span>{variant.label}</span>
+                      <DownloadSimpleIcon
+                        size={16}
+                        weight="bold"
+                        className="text-muted-foreground"
+                      />
+                    </div>
+                  )
+                )}
+              </div>
             </div>
-            <div className="divide-y">
-              {platform.variants.map((variant) =>
-                interactive ? (
-                  <button
-                    key={variant.key}
-                    onClick={() => onDownload(variant.key)}
-                    className="hover:bg-muted/50 flex w-full items-center justify-between px-5 py-3.5 text-sm transition-colors"
-                  >
-                    <span>{variant.label}</span>
-                    <DownloadSimple
-                      size={16}
-                      weight="bold"
-                      className="text-muted-foreground"
-                    />
-                  </button>
-                ) : (
-                  <div
-                    key={variant.key}
-                    className="flex w-full items-center justify-between px-5 py-3.5 text-sm"
-                  >
-                    <span>{variant.label}</span>
-                    <DownloadSimple
-                      size={16}
-                      weight="bold"
-                      className="text-muted-foreground"
-                    />
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <a
@@ -194,7 +196,7 @@ function DownloadCards({
         className="text-primary hover:text-primary/80 mt-5 inline-flex items-center gap-1 text-sm font-medium transition-colors"
       >
         View changelog
-        <ArrowRight size={14} weight="bold" />
+        <ArrowRightIcon size={14} weight="bold" />
       </a>
     </div>
   );
