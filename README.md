@@ -19,7 +19,7 @@
 
 ## What It Is
 
-Product website for [autOScan](https://github.com/autoscan-lab/autOScan) — a TUI tool for batch compiling, grading, and analyzing C lab submissions.
+Website for [autOScan](https://github.com/autoscan-lab/autOScan), a TUI tool for batch compiling, grading, and analyzing C lab submissions.
 
 - Hero section with animated iridescent background and video preview
 - Feature showcase with capability cards
@@ -59,8 +59,8 @@ bun run start
 
 ## Related
 
-- [autOScan](https://github.com/autoscan-lab/autOScan) — TUI grading tool
-- [autOScan Engine](https://github.com/autoscan-lab/autoscan-engine) — shared grading engine
+- [autOScan](https://github.com/autoscan-lab/autOScan) - TUI grading tool
+- [autOScan Engine](https://github.com/autoscan-lab/autoscan-engine) - shared grading engine
 
 ---
 
