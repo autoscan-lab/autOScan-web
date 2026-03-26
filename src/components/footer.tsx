@@ -1,8 +1,3 @@
-"use client";
-
-import { signIn, useSession } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-
 const YEAR = new Date().getFullYear();
 
 const LINKS = [
@@ -11,8 +6,6 @@ const LINKS = [
 ];
 
 export function Footer() {
-  const { data: session } = useSession();
-
   return (
     <footer className="pt-16 pb-8">
       <div className="mx-auto max-w-6xl px-6">
@@ -32,14 +25,6 @@ export function Footer() {
                 </a>
               </li>
             ))}
-            {!session?.user && (
-              <Button
-                className="w-full bg-foreground text-background hover:bg-foreground/85 sm:max-w-fit"
-                onClick={() => signIn("google")}
-              >
-                Sign in
-              </Button>
-            )}
           </ul>
         </div>
       </div>

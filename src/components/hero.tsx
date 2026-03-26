@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { SparkleIcon, DownloadSimpleIcon } from "@phosphor-icons/react";
 
 import { Badge } from "@/components/ui/badge";
@@ -18,8 +17,6 @@ const GLASS_BUTTON_CLASS =
   "rounded-full bg-zinc-100 px-4 text-zinc-900 transition hover:bg-zinc-200";
 
 function Nav() {
-  const { data: session, status } = useSession();
-
   return (
     <nav className="fixed top-0 right-0 left-0 z-50">
       <div className="w-full px-4 py-4 sm:px-6 lg:px-8">
@@ -33,47 +30,11 @@ function Nav() {
               <ThemeToggle />
             </div>
 
-            {status === "loading" ? (
-              <div className="h-8 w-24 animate-pulse rounded-xl bg-white/20" />
-            ) : session?.user ? (
-              <>
-                <img
-                  src={session.user.image ?? "/logos/profile.svg"}
-                  alt="Profile image"
-                  onError={(event) => {
-                    event.currentTarget.src = "/logos/profile.svg";
-                  }}
-                  className="h-8 w-8 rounded-full border border-white/45 object-cover"
-                />
-                <a href="#download">
-                  <Button size="sm" className={GLASS_BUTTON_CLASS}>
-                    Download
-                  </Button>
-                </a>
-                <Button
-                  size="sm"
-                  className={GLASS_BUTTON_CLASS}
-                  onClick={() => signOut({ redirect: false })}
-                >
-                  Sign Out
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  size="sm"
-                  className={GLASS_BUTTON_CLASS}
-                  onClick={() => signIn("google")}
-                >
-                  Sign In
-                </Button>
-                <a href="#download">
-                  <Button size="sm" className={GLASS_BUTTON_CLASS}>
-                    Download
-                  </Button>
-                </a>
-              </>
-            )}
+            <a href="#download">
+              <Button size="sm" className={GLASS_BUTTON_CLASS}>
+                Download
+              </Button>
+            </a>
           </div>
         </div>
       </div>
