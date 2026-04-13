@@ -4,7 +4,11 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import type { ChangelogRelease } from "@/lib/changelog";
 
-export function ChangelogTimeline({ releases }: { releases: ChangelogRelease[] }) {
+export function ChangelogTimeline({
+  releases,
+}: {
+  releases: ChangelogRelease[];
+}) {
   return (
     <main className="min-h-screen bg-background">
       <section className="mx-auto max-w-5xl px-6 py-16 md:py-20">
@@ -14,11 +18,14 @@ export function ChangelogTimeline({ releases }: { releases: ChangelogRelease[] }
             className="text-primary hover:text-primary/80 inline-flex items-center gap-1 text-sm font-medium transition-colors"
           >
             <ArrowLeftIcon size={14} weight="bold" />
-            Back home
+            Go back
           </a>
 
           <div className="mt-6 flex items-center gap-3">
-            <Badge variant="secondary" className="rounded-full px-3 py-1 font-medium">
+            <Badge
+              variant="secondary"
+              className="rounded-full px-3 py-1 font-medium"
+            >
               Changelog
             </Badge>
             <span className="text-foreground text-xs tracking-wide opacity-80">
@@ -94,7 +101,9 @@ export function ChangelogTimeline({ releases }: { releases: ChangelogRelease[] }
                         {section.bullets && section.bullets.length > 0 && (
                           <ul className="text-foreground marker:text-foreground mt-3 ml-5 list-disc space-y-2 text-base leading-relaxed md:text-lg">
                             {section.bullets.map((bullet) => (
-                              <li key={`${release.version}-${section.title}-${bullet}`}>
+                              <li
+                                key={`${release.version}-${section.title}-${bullet}`}
+                              >
                                 {bullet}
                               </li>
                             ))}

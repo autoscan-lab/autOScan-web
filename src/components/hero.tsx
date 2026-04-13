@@ -21,7 +21,10 @@ function Nav() {
     <nav className="fixed top-0 right-0 left-0 z-50">
       <div className="w-full px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <a href="/" className="font-mono text-lg font-bold tracking-tight text-white">
+          <a
+            href="/"
+            className="font-mono text-lg font-bold tracking-tight text-white"
+          >
             autOScan
           </a>
 
@@ -47,7 +50,7 @@ export function Hero() {
   const [iridescenceReady, setIridescenceReady] = React.useState(false);
   const handleIridescenceReady = React.useCallback(
     () => setIridescenceReady(true),
-    []
+    [],
   );
 
   return (
@@ -115,6 +118,25 @@ export function Hero() {
               >
                 <DownloadSimpleIcon size={18} weight="bold" />
                 Download v3.1.0
+              </Button>
+            </a>
+            <a
+              href="https://github.com/autoscan-lab/autOScan"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Button
+                size="lg"
+                variant="secondary"
+                className="gap-2 border border-white/80 bg-white text-zinc-900 hover:bg-zinc-100"
+              >
+                <img
+                  src="/logos/github-mark-dark.svg"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-[18px] w-[18px]"
+                />
+                View on GitHub
               </Button>
             </a>
           </div>
