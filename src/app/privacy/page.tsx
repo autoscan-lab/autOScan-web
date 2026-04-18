@@ -30,104 +30,27 @@ export default function PrivacyPage() {
           Last updated: April 18, 2026
         </p>
 
-        <div className="text-foreground mt-12 space-y-8 text-base leading-relaxed opacity-85">
-          <div>
-            <h2 className="text-foreground mb-3 text-xl font-medium opacity-100">
-              What is autOScan?
-            </h2>
-            <p>
-              autOScan is a private grading tool for university operating systems lab
-              assignments. It is used exclusively by teaching staff to compile and
-              analyse student code submissions.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-foreground mb-3 text-xl font-medium opacity-100">
-              Data we process
-            </h2>
-            <p>
-              When you interact with the autOScan WhatsApp agent, we process the
-              following data:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6">
-              <li>Your WhatsApp phone number, to route responses back to you.</li>
-              <li>
-                Files you send (zip archives containing student code), solely to
-                run the grading pipeline.
-              </li>
-              <li>
-                Temporary session state (current assignment, grading results),
-                held in memory for up to two hours and then discarded.
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-foreground mb-3 text-xl font-medium opacity-100">
-              How we use your data
-            </h2>
-            <p>
-              Data is used only to provide the grading service. We do not sell,
-              share, or use your data for advertising or any purpose beyond
-              processing your grading request.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-foreground mb-3 text-xl font-medium opacity-100">
-              Data retention
-            </h2>
-            <p>
-              Uploaded files are deleted immediately after grading completes.
-              Session data is discarded after two hours of inactivity. Generated
-              Excel reports are stored on the server until the next grading session
-              replaces them.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-foreground mb-3 text-xl font-medium opacity-100">
-              Third-party services
-            </h2>
-            <p>
-              We use the following third-party services to operate autOScan:
-            </p>
-            <ul className="mt-3 list-disc space-y-2 pl-6">
-              <li>
-                <span className="font-medium">Meta (WhatsApp Cloud API)</span> — to
-                send and receive WhatsApp messages.
-              </li>
-              <li>
-                <span className="font-medium">Groq</span> — to interpret natural
-                language commands. Message text is sent to Groq for processing.
-              </li>
-              <li>
-                <span className="font-medium">Fly.io</span> — to host the grading
-                service infrastructure.
-              </li>
-              <li>
-                <span className="font-medium">Cloudflare R2</span> — to store
-                assignment configuration files.
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-foreground mb-3 text-xl font-medium opacity-100">
-              Contact
-            </h2>
-            <p>
-              For any questions about this policy, contact us at{" "}
-              <a
-                href="mailto:felipetrejoslacayo2015@hotmail.com"
-                className="text-primary hover:text-primary/80 transition-colors"
-              >
-                felipetrejoslacayo2015@hotmail.com
-              </a>
-              .
-            </p>
-          </div>
+        <div className="text-foreground mt-12 space-y-6 text-base leading-relaxed opacity-85">
+          <p>
+            autOScan is a tool for compiling and analysing C code submissions.
+            The autOScan agent lets you send a zip file over WhatsApp, runs the
+            code through a grading pipeline, and sends back a report.
+          </p>
+          <p>
+            We do not collect, store, or share personal data. Uploaded files are
+            processed to produce the report and deleted immediately after.
+            No data is used for any other purpose.
+          </p>
+          <p>
+            Questions? Reach me at{" "}
+            <a
+              href="mailto:felipetrejoslacayo@gmail.com"
+              className="text-primary hover:text-primary/80 transition-colors"
+            >
+              felipetrejoslacayo@gmail.com
+            </a>
+            .
+          </p>
         </div>
       </section>
     </main>
