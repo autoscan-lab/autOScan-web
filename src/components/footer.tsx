@@ -1,8 +1,7 @@
 const YEAR = new Date().getFullYear();
 
 const LINKS = [
-  { title: "Features", href: "#features" },
-  { title: "Download", href: "#download" },
+  { title: "Privacy Policy", href: "/privacy" },
   {
     title: "Star on GitHub :)",
     href: "https://github.com/autoscan-lab/autOScan",
@@ -14,12 +13,8 @@ export function Footer() {
   return (
     <footer className="pt-16 pb-8">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="border-surface flex flex-row flex-wrap items-center !justify-center gap-x-10 gap-y-3 border-t pt-8 text-center md:!justify-between">
-          <p className="text-foreground">
-            Copyright &copy; {YEAR}{" "}
-            <span className="font-mono font-semibold">autOScan</span>
-          </p>
-          <ul className="flex flex-wrap items-center justify-center gap-6">
+        <div className="border-surface flex flex-row flex-wrap items-center justify-between gap-y-3 border-t pt-8">
+          <ul className="flex flex-wrap items-center gap-6">
             {LINKS.map(({ title, href, external }, key) => (
               <li key={key}>
                 <a
@@ -32,6 +27,7 @@ export function Footer() {
               </li>
             ))}
           </ul>
+          <p className="text-foreground text-sm opacity-40">&copy; {YEAR} autOScan</p>
         </div>
       </div>
     </footer>
